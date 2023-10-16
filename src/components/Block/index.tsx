@@ -1,8 +1,8 @@
-import React ,{useEffect} from 'react';
+import React from 'react';
 import {useDroppable} from '@dnd-kit/core';
 
 const Droppable = (props) => {
-  const {isOver, setNodeRef,active ,} = useDroppable({
+  const {isOver, setNodeRef, active} = useDroppable({
     id: props.id,
     data:
     {
@@ -16,18 +16,30 @@ const Droppable = (props) => {
     type = active.data.current.type;
   }
 
-
+  const handleSize = (boardSize) => {
+    let size; 
+    if (boardSize === 9) size = 4.5;
+    else if (boardSize === 6) size = 6.75;
+    else if (boardSize === 12) size = 3.375;
+    return size;
+  }
 
   const style = {
-    backgroundColor: !isOver? ((props.id.charCodeAt(0) % 2 === 0)
-      ? (props.index % 2 === 0) ? 'rgb(0, 0, 0,0.25)' : 'rgb(0, 0, 0,0.2)'
-      : (props.index % 2 !== 0) ? 'rgb(0, 0, 0,0.2)' : 'rgb(0, 0, 0,0.25)'): 
-      props.tileId === 'null' ? 'rgb(0,255,0,0.1)' : 'rgb(255,0,0,0.5)',
+    backgroundColor: !isOver
+      ? (('acegik'.includes(props.id[0]) && ['1', '3', '5', '7', '9', 'b'].includes(props.id.slice(1))) ||
+          ('bdfhjl'.includes(props.id[0]) && ['2', '4', '6', '8', 'a', 'c'].includes(props.id.slice(1)))
+        ? 'rgba(0, 0, 0, 0.2)'
+        : 'rgba(0, 0, 0, 0.25)'
+      )
+      : props.tileId === 'null'
+      ? 'rgba(0, 255, 0, 0.1)'
+      : 'rgba(255, 0, 0, 0.5)',
+    width: `${handleSize(props.boardSize)}rem`,
+    height: `${handleSize(props.boardSize)}rem`,
   };
 
-
   return (
-    <div ref={setNodeRef} style={style} className='md:w-[4.5rem]  md:h-[4.5rem]'>
+    <div ref={setNodeRef} style={style}>
       {props.children} 
     </div>
   );

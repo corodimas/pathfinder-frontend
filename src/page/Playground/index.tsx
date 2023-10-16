@@ -11,7 +11,7 @@ import Sizechanger from '../../components/Sizechanger';
 import {StraightTile,Corner,Deadend,Tway,Oneway ,Player,Finishline , Defaulttile} from '../../utils/types'
 import defaultBoard9x9 from '../../utils/defaultBoard';
 import defaultBoard6x6 from '../../utils/6x6Board';
-import { defaultBoard12x12 } from '../../utils/12x12Board';
+import defaultBoard12x12 from '../../utils/12x12Board';
 import { set } from 'mongoose';
 
 import stepSound from '../../assets/playground/step_sound.wav'
@@ -89,7 +89,7 @@ const defaultPlayer: Player[] = [
   {
     id: 'p1',
     boardId: 'null',
-    direction: "up",
+    direction: "down",
     tileType: 'player',
   }
 ]
@@ -116,6 +116,7 @@ const index = () => {
   const [player, setPlayer] = useState<Player[]>(defaultPlayer);
   const [finishline,setFinishline] = useState<Finishline[]>(defaultFinishline);
   const [boardData, setBoardData] = useState(defaultBoard9x9);
+  const [boardSize, setBoardSize] = useState(9);
   const dataObject = {straight: straight, corner: corner,deadend: deadend, tway: tway, oneway: oneway,player: player , finishline: finishline, defaulttile: defaulttile}  
   const dataArray = [straight, corner, deadend, tway,  oneway]
   const [position, setPosition] = useState({x:0,y:0});
@@ -263,7 +264,7 @@ const handleDragEnd = (event) => {
         const newData = activeArray.filter((item) => item.id !== active.id);
 
         if(currentData.boardId === 'null') {; return;}
-        if(active.data.current.type === 'player' || active.data.current.type === 'finishline'){
+        if(active.data.current.type === 'player' || active.data.current.type === 'finishline' || active.data.current.type === 'oneway'){
           if(active.data.current.type === 'player')
           {
             defaulttile[0].boardId = 'null';
@@ -287,7 +288,7 @@ const handleDragEnd = (event) => {
 
 
 const handleIncreaseTile = (active) => {
-  if (active.data.current.type === 'player' || active.data.current.tpye === 'finishline') return;
+  if (active.data.current.type === 'player' || active.data.current.type === 'finishline' || active.data.current.type === 'oneway')  return;
   if (active.data.current.boardId !== 'null') return;
   const pathArray ={straight: ["up","down"],corner: ["up","left"],deadend: ["none"],tway: ["up","left","down"],oneway: ["up"],player: ["up"],finishline: ["up"],defaulttile: ["up"]}
   const { type } = active.data.current;
@@ -318,7 +319,11 @@ const handleReset = () => {
   setOneway(defaultOneway);
   setPlayer(defaultPlayer);
   setFinishline(defaultFinishline);
-  setBoardData(defaultBoard9x9);
+
+  if(boardSize === 9) setBoardData(defaultBoard9x9);
+  if(boardSize === 6) setBoardData(defaultBoard6x6);
+  if(boardSize === 12) setBoardData(defaultBoard12x12);
+
   setDefaulttile(defaultTile);
   dataObject.straight = defaultStraight;
   dataObject.corner = defaultCorner;
@@ -509,7 +514,7 @@ const handleFinish = async () => {
   }
   catch(err)
   {
-    alert("Something went wrong please try again later")
+    alert("you place something illegal on the board \n -Player direction is not correctly \n -There is no tile in front of character")
     navigate('/endgame')
     console.log(err)
   }
@@ -1223,6 +1228,21 @@ const calculatePath = async () => {
   console.log(stack)
 }
 
+const handleSize = (size) => {
+  handleReset();
+  if (size === 9) {
+    setBoardData(defaultBoard9x9);
+    setBoardSize(9);
+  }
+  if (size === 6) {
+    setBoardData(defaultBoard6x6);
+    setBoardSize(6);
+  }
+  if (size === 12){
+    setBoardData(defaultBoard12x12);
+    setBoardSize(12);
+  } 
+}
 
 const playMoveSound = () => {
   const audio = new Audio(stepSound);
@@ -1241,12 +1261,12 @@ const playMoveSound = () => {
       <div className='relative'>
       <div style={{ backgroundImage: `url(${background})` }} className='w-full h-[100vh] flex justify-center items-center gap-[5rem] overflow-hidden animate-moving-background' >
           <Tileholder dataObject={dataObject} setFocusTile={setFocusTile} />
-          <Board dataObject={dataArray} boardData={boardData} setFocusTile={setFocusTile} player={player} finishline={finishline} defaultTile={defaultTile} position={position} isMove={isMove}/>
-          <Sizechanger/>
+          <Board dataObject={dataArray} boardSize={boardSize} boardData={boardData} setFocusTile={setFocusTile} player={player} finishline={finishline} defaultTile={defaultTile} position={position} isMove={isMove}/>
+          <Sizechanger onSelectSize={handleSize}/>
           <div className=' absolute flex bottom-1 w-[30rem] justify-center items-center '>
             <img src={tutorialButton} className='w-[8rem] pointer-events-auto hover:translate-y-[-3px] duration-100 active:opacity-70 active:hover:translate-y-[3px]  [clip-path:circle(40%_at_50%_50%)]' draggable={false} onClick={calculatePath}/>
             <img src={startButton} className='w-[12rem] pointer-events-auto hover:translate-y-[-3px] duration-100   active:opacity-70 active:hover:translate-y-[3px] [clip-path:circle(38%_at_50%_50%)]' draggable={false} onClick={handleFinish}/>
-            <img src={restartButton} className='w-[8rem] pointer-events-auto hover:translate-y-[-3px] duration-100 active:opacity-70 active:hover:translate-y-[3px] [clip-path:circle(40%_at_50%_50%)]' draggable={false} onClick={playMoveSound} />
+            <img src={restartButton} className='w-[8rem] pointer-events-auto hover:translate-y-[-3px] duration-100 active:opacity-70 active:hover:translate-y-[3px] [clip-path:circle(40%_at_50%_50%)]' draggable={false} onClick={handleReset} />
           </div>
           <h1 className={`absolute top-10 text-[4rem] duration-200 transform transition-opacity ${focusTile ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-0'}`}>
             Press Q or E to rotate

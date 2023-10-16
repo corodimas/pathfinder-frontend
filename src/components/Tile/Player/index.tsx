@@ -1,12 +1,13 @@
-import React , {useEffect} from 'react';
+import React , {useEffect, useState} from 'react';
 import {useDraggable} from '@dnd-kit/core';
 
 import { SpriteAnimator } from 'react-sprite-animator'
-
+import {playerDownMove, playerUpMove, playerLeftMove, playerRightMove, playerDownIdle, playerUpIdle, playerLeftIdle, playerRightIdle } from '../../../assets/test'
 
 const Playertile =(props) =>{
-  const spirteData = [{id:'down',src:props.playerImage.down},{id:'up',src:props.playerImage.up},{id:'left',src:props.playerImage.left},{id:'right',src:props.playerImage.right}]
-  const spriteIdle = [{id:'down',src:props.playerIdle.down},{id:'up',src:props.playerIdle.up},{id:'left',src:props.playerIdle.left},{id:'right',src:props.playerIdle.right}]
+  const spirteData = [{id:'down',src:playerDownMove},{id:'up',src:playerUpMove},{id:'left',src:playerLeftMove},{id:'right',src:playerRightMove}]
+  const spriteIdle = [{id:'down',src:playerDownIdle},{id:'up',src:playerUpIdle},{id:'left',src:playerLeftIdle},{id:'right',src:playerRightIdle}]
+  
   const {attributes, listeners, setNodeRef, transform , isDragging} = useDraggable({
     id: props.id,
     data:
@@ -24,20 +25,39 @@ const Playertile =(props) =>{
     props.setFocusTile(isDragging)
   }, [isDragging])
   //<img src={imgData.find((item)=>item.id === props.direction)?.src} alt={props.type} className='w-full h-full'/>
+
+  const handleScale = (boardSize) => {
+    let size;
+    if (boardSize === 9) size = 1.5;
+    else if (boardSize === 6) size = 1;
+    else if (boardSize === 12) size = 2;
+    return size;
+  }
+
+  const handlePosition = (boardSize) => {
+    let left;
+    if (boardSize === 9) left = -1.25;
+    else if (boardSize === 6) left = -2;
+    else if (boardSize === 12) left = -1;
+    return left;
+  }
+
   return (
 
     <button ref={setNodeRef} style={style} {...listeners} {...attributes} className={`w-[4.5rem] h-[4.5rem] z-[20] object-contain relative ${!isDragging ? 'transition-transform transform translate-y-[-10px]' : ''}`}>
-    <SpriteAnimator
-      sprite={!props.isMove ? spriteIdle.find((item)=>item.id === props.direction)?.src:spirteData.find((item)=>item.id === props.direction)?.src}
-      width={172}
-      height={124}
-      frameCount={16}
-      wrapAfter={1}
-      fps={4}
-      scale={1.5}
-      direction={'horizontal'}
-      className='absolute top-[-0.5rem] left-[-1.25rem]'
-    />
+    <div style={{ position: 'absolute', top: '-0.5rem', left: `${handlePosition(props.boardSize)}rem` }}>
+      <SpriteAnimator
+        sprite={!props.isMove ? spriteIdle.find((item)=>item.id === props.direction)?.src:spirteData.find((item)=>item.id === props.direction)?.src}
+        width={172}
+        height={124}
+        frameCount={16}
+        wrapAfter={1}
+        fps={4}
+        scale={handleScale(props.boardSize)}
+        direction={'horizontal'}
+      />
+    </div>
+    
     </button>
   );
 }

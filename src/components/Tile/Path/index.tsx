@@ -19,6 +19,14 @@ const Tile =(props) =>{
     transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
   } : undefined; 
 
+  const handleSize = (boardSize) => {
+    let size; 
+    if (boardSize === 9) size = 4.5;
+    else if (boardSize === 6) size = 6.75;
+    else if (boardSize === 12) size = 3.375;
+    return size;
+  }
+
   useEffect(() => {
     props.setFocusTile(isDragging)
   }, [isDragging])
@@ -28,7 +36,7 @@ const Tile =(props) =>{
   const element = direction.find((item)=>item.id === props.direction)?.rotate
 
   return (
-    <button ref={setNodeRef} style={style} {...listeners} {...attributes} className='w-[4.5rem] h-[4.5rem] z-[50]'>
+    <button ref={setNodeRef} style={style} {...listeners} {...attributes} className={`w-[${handleSize(props.boardSize)}rem] h-[${handleSize(props.boardSize)}rem] z-[50]`}>
       <img src={imgData.find((item)=>item.id === props.type)?.src} alt={props.type} className={`w-full h-full ${element}`}/>
     </button>
     

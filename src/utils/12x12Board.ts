@@ -1,21 +1,18 @@
 import { Board } from './types';
-function generateDefaultBoard(rows: number, columns: number): Board[] {
-    const board: Board[] = [];
-  
-    for (let i = 0; i < rows; i++) {
-      for (let j = 0; j < columns; j++) {
-        const cell: Board = {
-          id: String.fromCharCode(97 + i) + (j + 1).toString(), 
-          tileId: 'null',
-          tileType: 'null',
-        };
-        board.push(cell);
-      }
-    }
-  
-    return board;
+
+const defaultBoard12x12: Board[] = [];
+
+const alphabet = 'abcdefghijkl';
+const num = '123456789abc';
+
+for (const a of alphabet) {
+  for (const n of num) {
+    const id = `${a}${n}`;
+    const tileId = 'null';
+    const tileType = 'null';
+
+    defaultBoard12x12.push({ id, tileId, tileType });
   }
-  
-export const defaultBoard12x12: Board[] = generateDefaultBoard(12, 12);
+}
 
-
+export default defaultBoard12x12;

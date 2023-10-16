@@ -22,14 +22,6 @@ const route = () => {
 
   return (
     <BrowserRouter>
-      <div className='absolute z-50'>
-        <div className='flex gap-10 '>
-          <Link className='bg-red-500 p-1 rounded-md' to="/" >Home</Link>
-          <Link className='bg-red-500 p-1 rounded-md' to="/tutorial" >Tutorial</Link>
-          <Link className='bg-red-500 p-1 rounded-md' to="/playground">Playground</Link>
-          <Link className='bg-red-500 p-1 rounded-md' to="/endgame">EndGame</Link>
-        </div>
-      </div>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/tutorial" element={<Tutorial />} />
