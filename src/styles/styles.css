@@ -7,6 +7,10 @@
     src: url("../assets/font/joystix.otf");
 }
 
+@font-face {
+    font-family: "pixelus";
+    src: url("../assets/font/pixelus.ttf");
+}
 
 @layer base {
     .font-outline-2 {
@@ -16,4 +20,6 @@
         text-shadow: -8px -8px 0 white, 8px -8px 0 white, -8px 8px 0 white, 8px 8px 0 white , -8px 0 0 white , 8px 0 0 white;
     }
   }
+
+
 

@@ -8,7 +8,8 @@ export default {
     extend: {
       fontFamily:
       {
-        sans:["joystix", "sans"]
+        sans:["joystix", "sans"],
+        pixelus:["pixelus","sans"]
       },
       keyframes: {
         'moving-background': {
@@ -19,10 +20,15 @@ export default {
             'background-position': '-10000px 0',
           },
         },
+        'wiggle': {
+          '0%, 100%': { transform: 'rotate(-5deg)' },
+          '50%': { transform: 'rotate(5deg)' },
+        },
       },
       animation:
       {
-        'moving-background':'moving-background 250s linear infinite'
+        'moving-background':'moving-background 250s linear infinite',
+         'wiggle': 'wiggle 1s ease-in-out infinite',
       }
     },
   },

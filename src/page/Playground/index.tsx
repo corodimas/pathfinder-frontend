@@ -1249,6 +1249,8 @@ const playMoveSound = () => {
   audio.play();
 }
 
+
+
   if(resetting)
   {
     return (
@@ -1264,7 +1266,7 @@ const playMoveSound = () => {
           <Board dataObject={dataArray} boardSize={boardSize} boardData={boardData} setFocusTile={setFocusTile} player={player} finishline={finishline} defaultTile={defaultTile} position={position} isMove={isMove}/>
           <Sizechanger onSelectSize={handleSize}/>
           <div className=' absolute flex bottom-1 w-[30rem] justify-center items-center '>
-            <img src={tutorialButton} className='w-[8rem] pointer-events-auto hover:translate-y-[-3px] duration-100 active:opacity-70 active:hover:translate-y-[3px]  [clip-path:circle(40%_at_50%_50%)]' draggable={false} onClick={calculatePath}/>
+            <img src={tutorialButton} className='w-[8rem] pointer-events-auto hover:translate-y-[-3px] duration-100 active:opacity-70 active:hover:translate-y-[3px]  [clip-path:circle(40%_at_50%_50%)]' draggable={false} onClick={()=>{navigate('/tutorial')}}/>
             <img src={startButton} className='w-[12rem] pointer-events-auto hover:translate-y-[-3px] duration-100   active:opacity-70 active:hover:translate-y-[3px] [clip-path:circle(38%_at_50%_50%)]' draggable={false} onClick={handleFinish}/>
             <img src={restartButton} className='w-[8rem] pointer-events-auto hover:translate-y-[-3px] duration-100 active:opacity-70 active:hover:translate-y-[3px] [clip-path:circle(40%_at_50%_50%)]' draggable={false} onClick={handleReset} />
           </div>

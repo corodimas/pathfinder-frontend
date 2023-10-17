@@ -28,7 +28,7 @@ function Home() {
             </div>
             <img src={island} className=' pr-[100px] z-10' />
         </div>
-        <div className='absolute z-10 top-[40rem] left-[5.5rem] select-none'>
+        <div className='absolute z-10 top-[47rem] left-[5.5rem] select-none'>
           <div className=' hover:scale-110 ml-1 cursor-pointer' onClick={()=>{navigate('playground')}}>
             <img src={buttonM} className='w-[30rem] pr-[90px]' />
             <p className='w-[34rem] pr-[140px] pt-[1.5rem] mt-[-9rem] text-center text-7xl text-[#90625D]' >PLAY</p>

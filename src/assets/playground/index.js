@@ -11,6 +11,7 @@ import playerLeft from './player_left.png';
 import playerRight from './player_right.png';
 import finishline from './finishline.png';
 import defaultTile from './default_tile.png';
+import BackgroundMusic from './background_music.mp3'
 
 export {
   character,
@@ -25,5 +26,6 @@ export {
   playerLeft,
   playerRight,
   finishline,
-  defaultTile
+  defaultTile,
+  BackgroundMusic
   };
