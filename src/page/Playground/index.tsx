@@ -420,7 +420,6 @@ const handleInput = async (textInput) => {
 const initializeStart = async() => {
   
   const playerBoard = player[0].boardId;
-  const finishlineBoard = finishline[0].boardId;
   const ypos = Array.from(playerBoard)[0].charCodeAt(0) 
   const xpos = Array.from(playerBoard)[1].charCodeAt(0)
   if (player[0].direction === 'up') {
@@ -516,7 +515,6 @@ const handleFinish = async () => {
   {
     alert("you place something illegal on the board \n -Player direction is not correctly \n -There is no tile in front of character")
     navigate('/endgame')
-    console.log(err)
   }
 }
 
@@ -545,7 +543,6 @@ const calculatePath = async () => {
 
   const goBack = () =>
   {
-    console.log(stack)
     if (data[data.length-1] === 'up') {
       const board = boardData.find((item) => item.id === String.fromCharCode(ypos+1)+String.fromCharCode(xpos))
       if(board?.tileId !== 'null')
@@ -635,7 +632,6 @@ const calculatePath = async () => {
   if (item.tileType === 'straight') {
       if (data[data.length-1] === 'up') {
         const board = boardData.find((item) => item.id === String.fromCharCode(ypos-1)+String.fromCharCode(xpos))
-        console.log(board)
         if(board?.tileId !== 'null')
         {
           const { state } = tileTypeMap[board.tileType];
@@ -759,7 +755,6 @@ const calculatePath = async () => {
       }
       else if(possiblePath[0] === 'up')
       {
-        console.log('asdadsasd')
         const board = boardData.find((item) => item.id === String.fromCharCode(ypos-1)+String.fromCharCode(xpos))
         if(board === undefined  || board.tileId === 'null') {checkGameOver(); return;};
         const {state} = tileTypeMap[board.tileType];
@@ -798,7 +793,6 @@ const calculatePath = async () => {
     const oppsiteWay = {'up':'down', 'down':'up', 'left':'right', 'right':'left'}
     if(!thereIsWay)
     {
-      console.log('stack test test ----', stack)
       onewayStack.pop();
       stack.splice(2);
       if (data[data.length-1] === 'up') {
@@ -888,7 +882,6 @@ const calculatePath = async () => {
     }
     else
     {
-      console.log('burh')
       onewayStack.push(item.tileId);
       goBack();
     }
@@ -907,15 +900,12 @@ const calculatePath = async () => {
     else
     {
       const stackItem = stack.find(item => item.id === tileId);
-      console.log(stackItem)
       const possiblePath = path.filter((item) => !stackItem.pathTaken.includes(item));
 
       if(possiblePath.length === 0)
       {
           const thereIsWay = stack.some(item=> item.id !== 'z' && item.pathTaken.length !== 3)
           const thereIsOneway = onewayStack.length !== 0;
-
-          console.log(thereIsWay)
           if(thereIsWay)
           {
             const onlypath = stackItem.pathTaken[0];
@@ -1224,8 +1214,6 @@ const calculatePath = async () => {
   {
     data.push('finish');
   }
-  console.log(data)
-  console.log(stack)
 }
 
 const handleSize = (size) => {

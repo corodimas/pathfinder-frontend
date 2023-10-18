@@ -36,6 +36,7 @@ const Droppable = (props) => {
       : 'rgba(255, 0, 0, 0.5)',
     width: `${handleSize(props.boardSize)}rem`,
     height: `${handleSize(props.boardSize)}rem`,
+    marginTop: (props.id[0] == 'a') && '2.5rem'
   };
 
   return (

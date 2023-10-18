@@ -16,6 +16,9 @@
     .font-outline-2 {
         text-shadow: -2px -2px 0 white, 2px -2px 0 white, -2px 2px 0 white, 2px 2px 0 white , -2px 0 0 white , 2px 0 0 white;
     }
+    .font-outline-3 {
+        text-shadow: -5px -5px 0 white, 5px -5px 0 white, -5px 5px 0 white, 5px 5px 0 white , -5px 0 0 white , 5px 0 0 white;
+    }
     .font-outline-4 {
         text-shadow: -8px -8px 0 white, 8px -8px 0 white, -8px 8px 0 white, 8px 8px 0 white , -8px 0 0 white , 8px 0 0 white;
     }

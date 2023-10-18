@@ -11,7 +11,7 @@ import {
   ff_cat,
   reset,
   start,
-  question
+  question,
 } from "../../assets/tutorial";
 import { useNavigate } from "react-router-dom";
 const Index = () => {
@@ -24,14 +24,14 @@ const Index = () => {
 
   return (
     <div>
-      <div className="flex place-content-center">
+      <div className="flex place-content-center select-none">
         <div
           style={{ backgroundImage: `url(${background})` }}
           className="w-full h-[100vh] flex gap-[5rem] overflow-hidden animate-moving-background absolute"
         ></div>
         <div className="absolute top-2 right-12 text-white text-4xl">2/2</div>
         <div className="absolute flex w-[80vh]">
-          <img src={label} alt="label" className="w-full" />
+          <img src={label} alt="label" className="w-full" draggable={false} />
         </div>
         <div className="absolute flex flex-col w-[80vh] text-white font-pixelus text-[4.5vh] leading-[4vh]">
           <div className="pt-[9.5vh] pl-[3vh]">
@@ -44,41 +44,63 @@ const Index = () => {
           <div className="pt-[7vh] pl-[3vh]">
             #4 วางหุ่นยนต์ในตำำแหน่งที่ต้องการ
           </div>
-          <div className="pt-[7vh] pl-[3vh]">
-            #5 กดเพื่อ reset สนาม
-          </div>
+          <div className="pt-[7vh] pl-[3vh]">#5 กดเพื่อ reset สนาม</div>
           <div className="pt-[7vh] pl-[3vh]">
             #6 กดเพื่อปล่อยให้หุ่นยนต์เริ่มเดินไปยังเส้นชัย
           </div>
-          <div className="pt-[8vh] pl-[3vh]">
-            #7 กดเพื่อดูวิธีการเล่น
-          </div>
+          <div className="pt-[8vh] pl-[3vh]">#7 กดเพื่อดูวิธีการเล่น</div>
         </div>
         <div className="flex gap-[20vh]">
           <div className="flex w-[70vh]"></div>
           <div className="flex flex-col ml-4 w-[8.5vh]">
-            <img src={rock} alt="rock" className="w-[8vh] pt-[10vh] animate-wiggle" />
-            <img src={house} alt="house" className="pt-[3vh] animate-wiggle" />
+            <img
+              src={rock}
+              alt="rock"
+              className="w-[8vh] pt-[10vh] animate-wiggle"
+              draggable={false}
+            />
+            <img
+              src={house}
+              alt="house"
+              className="pt-[3vh] animate-wiggle"
+              draggable={false}
+            />
             <img
               src={ff_cat}
               alt="ff_cat"
               className="pt-[2vh] animate-wiggle"
+              draggable={false}
             />
-            <img src={reset} alt="reset" className="pt-[2vh] animate-wiggle" />
-            <img src={start} alt="start" className="pt-[1.5vh] animate-wiggle" />
-            <img src={question} alt="question" className="pt-[2vh] animate-wiggle" />
+            <img
+              src={reset}
+              alt="reset"
+              className="pt-[2vh] animate-wiggle"
+              draggable={false}
+            />
+            <img
+              src={start}
+              alt="start"
+              className="pt-[1.5vh] animate-wiggle"
+              draggable={false}
+            />
+            <img
+              src={question}
+              alt="question"
+              className="pt-[2vh] animate-wiggle"
+              draggable={false}
+            />
           </div>
         </div>
 
         <div className="absolute bottom-0 w-full">
-          <img src={ground} alt="ground" className="w-full" />
+          <img src={ground} alt="ground" className="w-full" draggable={false} />
         </div>
         <div>
           <div className="absolute top-2 left-2">
-            <img src={HOW} alt="how" className="w-[73vh]" />
+            <img src={HOW} alt="how" className="w-[73vh]" draggable={false} />
           </div>
           <div className="absolute top-[6vh] left-[30vh] animate-bounce w-[15vh]">
-            <img src={cat} alt="cat" />
+            <img src={cat} alt="cat" draggable={false} />
           </div>
         </div>
         <div className="absolute flex justify-between w-full px-5 py-5 bottom-0">

@@ -24,8 +24,18 @@ const Playertile =(props) =>{
   useEffect(() => {
     props.setFocusTile(isDragging)
   }, [isDragging])
-  //<img src={imgData.find((item)=>item.id === props.direction)?.src} alt={props.type} className='w-full h-full'/>
+  
+  useEffect(() => {
+    const preloadImages = (urls) => {
+      urls.forEach((url) => {
+        const img = new Image();
+        img.src = url;
+      });
+    };
 
+    const spriteImageUrls = [playerDownMove, playerUpMove, playerLeftMove, playerRightMove, playerDownIdle, playerUpIdle, playerLeftIdle, playerRightIdle];
+    preloadImages(spriteImageUrls);
+  }, []);
   const handleScale = (boardSize) => {
     let size;
     if (boardSize === 9) size = 1.5;

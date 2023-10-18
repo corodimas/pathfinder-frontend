@@ -14,6 +14,7 @@ import chicken1 from './chicken1.png'
 import chicken2 from './chicken2.png'
 import treeBerry from './tree_berry.png'
 import tree from './tree.png'
+import new_board from './new_board.png'
 
 export {
     background,
@@ -31,5 +32,6 @@ export {
     chicken1,
     chicken2,
     treeBerry,
-    tree
+    tree,
+    new_board
   };
