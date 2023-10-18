@@ -24,6 +24,7 @@ function Home() {
 
       {/* BG Object*/}
       <div className="absolute flex justify-end z-10 w-screen">
+        <h1 className="absolute text-black top-10 text-xl font-outline-2 right-6">Source Code: https://github.com/pathfinder-toc/pathfinder-frontend</h1>
         <div className="absolute flex flex-col items-end mr-[29.5vh] mt-[20vh]">
           <div className="z-20 mt-[10vh] mr-[3.5vw]">
             <Flower />
@@ -34,7 +35,7 @@ function Home() {
           <div className="z-10 animate-bounce w-[7vh] mr-[31vw] mt-[10vh]">
             <img src={chicken1} draggable={false} />
           </div>
-        </div>
+        ih</div>
         <img src={island} draggable={false} className="w-screen  pr-[10vh]" />
       </div>
 

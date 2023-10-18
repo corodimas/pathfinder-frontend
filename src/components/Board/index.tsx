@@ -1,15 +1,11 @@
 import React from 'react';
 import Droppable from '../Block/index';
-import {new_board,tileHolder} from '../../assets/home';
+import {board,tileHolder} from '../../assets/home';
 import Tile from '../Tile/Path/index';
 import Playertile from '../Tile/Player';
 import Finishline from '../Tile/Finishline';
-import {playerDownMove,playerLeftMove,playerUpMove,playerRightMove , playerDownIdle,playerLeftIdle,playerRightIdle,playerUpIdle} from '../../assets/test'
 
 export const Board =({dataObject,boardSize,boardData,setFocusTile,player, finishline, defaultTile ,position,isMove}) =>{
-
-  const playerImage = {down:playerDownMove,up:playerUpMove,left:playerLeftMove,right:playerRightMove}
-  const playerIdle = {down:playerDownIdle,up:playerUpIdle,left:playerLeftIdle,right:playerRightIdle}
   return (
     <div className=' relative'>
       
@@ -17,7 +13,7 @@ export const Board =({dataObject,boardSize,boardData,setFocusTile,player, finish
           <div className='flex justify-between h-full flex-col '>
             <div className='flex justify-center items-center'> 
             <div className='flex items-center justify-center flex-wrap gap-10'>
-              <div className={`grid ${(boardSize === 9) && 'grid-cols-9'} ${(boardSize === 6) && 'grid-cols-6'} ${(boardSize === 12) && 'grid-cols-12'} mt-[50px]`}>
+              <div className={`grid ${(boardSize === 9) && 'grid-cols-9'} ${(boardSize === 6) && 'grid-cols-6'} ${(boardSize === 12) && 'grid-cols-12'} mt-[1rem]`}>
                   {boardData.map((boardItem ,index) => (
                     <Droppable id={boardItem.id} index={index} tileId={boardItem.tileId} tileType={boardItem.tileType} boardSize={boardSize}>
                       <div className='relative'>
@@ -54,7 +50,7 @@ export const Board =({dataObject,boardSize,boardData,setFocusTile,player, finish
             </div>
           </div>
       </div>
-      <img src={new_board} className='w-[65rem] pointer-events-auto' draggable={false}/>
+      <img src={board} className='w-[65rem] pointer-events-auto' draggable={false}/>
       </div>
 );
 };

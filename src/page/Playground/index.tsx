@@ -1,6 +1,7 @@
 import React, { useState , useEffect } from 'react'
 import { useNavigate} from 'react-router-dom'
 import {background,restartButton,tutorialButton,startButton, board} from '../../assets/home'
+import { leftArrow } from '../../assets/tutorial';
 
 import {DndContext} from '@dnd-kit/core';
 
@@ -12,7 +13,6 @@ import {StraightTile,Corner,Deadend,Tway,Oneway ,Player,Finishline , Defaulttile
 import defaultBoard9x9 from '../../utils/defaultBoard';
 import defaultBoard6x6 from '../../utils/6x6Board';
 import defaultBoard12x12 from '../../utils/12x12Board';
-import { set } from 'mongoose';
 
 import stepSound from '../../assets/playground/step_sound.wav'
 
@@ -124,6 +124,8 @@ const index = () => {
   const data = [];
   const stack = [{id:'z',pathTaken:[]},]; //stack for backtracking
   const onewayStack = [];
+  let lastDirection = '';
+  let lastTway = '';
   const tileTypeMap = {
     straight: { state: straight, setState: setStraight },
     corner: { state: corner, setState: setCorner },
@@ -136,11 +138,12 @@ const index = () => {
   const rotationDirection = {
     straight: {'up':['up','down'],'left':['left','right'],'down':['up','down'],'right':['left','right']},
     corner: {'up':['up','left'],'left':['left','down'],'down':['down','right'],'right':['right','up']},
-    tway: {'up':['up','left','down'],'left':['left','down','right'],'down':['down','right','up'],'right':['right','up','left']},
+    tway: {'up':['up','left','down'],'left':['left','down','right'],'down':['up','down','right'],'right':['right','up','left']},
     oneway: {'up':['down'],'left':['right'],'down':['up'],'right':['left']},
     player: {'up':['up'],'left':['left'],'down':['down'],'right':['right']},
     finishline: {'up':['up','down','left','right'],'left':['up','down','left','right'],'down':['up','down','left','right'],'right':['up','down','left','right']}
   }
+
 
   
 
@@ -882,14 +885,15 @@ const calculatePath = async () => {
     }
     else
     {
-      onewayStack.push(item.tileId);
       goBack();
+      onewayStack.push({id:lastTway, pathTaken: lastDirection});
     }
 
   }
 
   else if (item.tileType === 'tway')
   {
+    lastTway = item.id;
     const tile = state.find((item) => item.id === tileId);
     const path = tile.path;
     const oppositeWay = {'up':'down', 'down':'up', 'left':'right', 'right':'left'}
@@ -910,7 +914,7 @@ const calculatePath = async () => {
           {
             const onlypath = stackItem.pathTaken[0];
             if(onlypath === 'right')
-    {
+        {
         const board = boardData.find((item) => item.id === String.fromCharCode(ypos)+String.fromCharCode(xpos+1))
         if(board === undefined || board.tileId === 'null') {data.push('nopath'); return;};
         const {state} = tileTypeMap[board.tileType];
@@ -919,6 +923,7 @@ const calculatePath = async () => {
         {
           data.push('right')
           startingBoard = board;
+          lastDirection = 'right';
         }
         else
         {
@@ -935,6 +940,7 @@ const calculatePath = async () => {
               {
                 data.push('left')
                 startingBoard = board;
+                lastDirection = 'left';
               }
               else
               {
@@ -951,6 +957,7 @@ const calculatePath = async () => {
               {
                 data.push('up')
                 startingBoard = board;
+                lastDirection = 'up';
               }
               else
               {
@@ -967,6 +974,7 @@ const calculatePath = async () => {
               {
                 data.push('down')
                 startingBoard = board;
+                lastDirection = 'down';
               }
               else
               {
@@ -976,17 +984,23 @@ const calculatePath = async () => {
           }
           else if(thereIsOneway)
           {
+            console.log(stackItem)
+            console.log(stack)
+            console.log(stackItem.pathTaken.includes(onewayStack[onewayStack.length-1]))
             let onlypath;
             if(stack[1] === stackItem)
             {
               onlypath = stackItem.pathTaken[1];
               
             }
+            else if (stackItem.id === onewayStack[onewayStack.length-1].id)
+            {
+              onlypath = onewayStack[onewayStack.length-1].pathTaken;
+            }
             else
             {
               onlypath = stackItem.pathTaken[0];
             }
-            
             if(onlypath === 'right')
     {
         const board = boardData.find((item) => item.id === String.fromCharCode(ypos)+String.fromCharCode(xpos+1))
@@ -997,6 +1011,7 @@ const calculatePath = async () => {
         {
           data.push('right')
           startingBoard = board;
+          lastDirection = 'right';
         }
         else
         {
@@ -1013,6 +1028,7 @@ const calculatePath = async () => {
               {
                 data.push('left')
                 startingBoard = board;
+                lastDirection = 'left';
               }
               else
               {
@@ -1029,6 +1045,7 @@ const calculatePath = async () => {
               {
                 data.push('up')
                 startingBoard = board;
+                lastDirection = 'up';
               }
               else
               {
@@ -1045,6 +1062,7 @@ const calculatePath = async () => {
               {
                 data.push('down')
                 startingBoard = board;
+                lastDirection = 'down';
               }
               else
               {
@@ -1059,6 +1077,7 @@ const calculatePath = async () => {
           }
           return;
       }
+
       if(possiblePath[0] === 'right')
    {
       const board = boardData.find((item) => item.id === String.fromCharCode(ypos)+String.fromCharCode(xpos+1))
@@ -1068,7 +1087,10 @@ const calculatePath = async () => {
       if(item.path.includes('left'))
       {
         data.push('right')
+        lastDirection = 'right';
         startingBoard = board;
+
+        
       }
       }
       else if(possiblePath[0] === 'left')
@@ -1080,6 +1102,7 @@ const calculatePath = async () => {
         if(item.path.includes('right'))
         {
           data.push('left')
+          lastDirection = 'left';
           startingBoard = board;
         }
       }
@@ -1092,6 +1115,7 @@ const calculatePath = async () => {
         if(item.path.includes('down'))
         {
           data.push('up')
+          lastDirection = 'up';
           startingBoard = board;
         }
       }
@@ -1104,12 +1128,14 @@ const calculatePath = async () => {
         if(item.path.includes('up'))
         {
           data.push('down')
+          lastDirection = 'down';
           startingBoard = board;
         }
       }
       stackItem.pathTaken.push(possiblePath[0]);
     }
 
+    
   }
 
 
@@ -1214,6 +1240,9 @@ const calculatePath = async () => {
   {
     data.push('finish');
   }
+  console.log(stack)
+  console.log(data)
+
 }
 
 const handleSize = (size) => {
@@ -1263,6 +1292,7 @@ const playMoveSound = () => {
           </h1>
           {lockDown && <div className='bg-transparent absolute w-full h-full z-[1000]'></div>}
           </div>
+          <img src={leftArrow}  className='absolute z-[10] left-3 bottom-2 pointer-events-auto hover:translate-y-[-3px] active:opacity-70 active:hover:translate-y-[3px] [clip-path:circle(60%_at_50%_50%)]' onClick={()=>{navigate('/')}}/>
       </div>  
       
     </DndContext>
