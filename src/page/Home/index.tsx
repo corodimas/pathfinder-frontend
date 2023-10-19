@@ -24,9 +24,12 @@ function Home() {
 
       {/* BG Object*/}
       <div className="absolute flex justify-end z-10 w-screen">
-        <h1 className="absolute text-black top-10 text-xl font-outline-2 right-6">
+        <a
+          href="https://github.com/pathfinder-toc/pathfinder-frontend"
+          className="absolute text-black top-10 text-xl font-outline-2 right-6"
+        >
           Source Code: https://github.com/pathfinder-toc/pathfinder-frontend
-        </h1>
+        </a>
         <div className="absolute flex flex-col items-end mr-[29.5vh] mt-[20vh]">
           <div className="z-20 mt-[10vh] mr-[3.5vw]">
             <Flower />
