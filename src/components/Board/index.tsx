@@ -1,6 +1,6 @@
 import React from 'react';
 import Droppable from '../Block/index';
-import {board,tileHolder} from '../../assets/home';
+import {new_board,tileHolder} from '../../assets/home';
 import Tile from '../Tile/Path/index';
 import Playertile from '../Tile/Player';
 import Finishline from '../Tile/Finishline';
@@ -37,7 +37,7 @@ export const Board =({dataObject,boardSize,boardData,setFocusTile,player, finish
             <div className='flex justify-between mx-32 mb-10'> 
               <div className='relative'>
                 <div className='absolute left-[0.7rem]'>
-                  {player.map((item) => ((item.boardId === 'null')?<Playertile id={item.id} boardSize={9} key={item.id} direction={item.direction} type={"player"} boardId={item.boardId} setFocusTile={setFocusTile} position={position} isMove={isMove} />: null ))}
+                  {player.map((item) => ((item.boardId === 'null')?<Playertile id={item.id} boardSize={0} key={item.id} direction={item.direction} type={"player"} boardId={item.boardId} setFocusTile={setFocusTile} position={position} isMove={isMove} />: null ))}
                 </div>
                 <img src={tileHolder} className='w-[6rem] draggable={false} '/>
               </div>
@@ -50,7 +50,7 @@ export const Board =({dataObject,boardSize,boardData,setFocusTile,player, finish
             </div>
           </div>
       </div>
-      <img src={board} className='w-[65rem] pointer-events-auto' draggable={false}/>
+      <img src={new_board} className='w-[65rem] pointer-events-auto' draggable={false}/>
       </div>
 );
 };

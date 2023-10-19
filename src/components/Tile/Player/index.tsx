@@ -38,17 +38,19 @@ const Playertile =(props) =>{
   }, []);
   const handleScale = (boardSize) => {
     let size;
-    if (boardSize === 9) size = 1.5;
-    else if (boardSize === 6) size = 1;
-    else if (boardSize === 12) size = 2;
+    if (boardSize === 9) size = 1.75;
+    else if (boardSize === 6) size = 1.25;
+    else if (boardSize === 12) size = 2.25;
+    else if (boardSize === 0) size = 1.5;
     return size;
   }
 
   const handlePosition = (boardSize) => {
     let left;
     if (boardSize === 9) left = -1.25;
-    else if (boardSize === 6) left = -2;
+    else if (boardSize === 6) left = -1.5;
     else if (boardSize === 12) left = -1;
+    else if (boardSize === 0) left = -1.25;
     return left;
   }
 
