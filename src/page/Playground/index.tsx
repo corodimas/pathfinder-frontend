@@ -359,6 +359,15 @@ const handleReset = () => {
  
 }
 
+const handleDistance = (boardSize) =>
+{
+  let size; 
+  if (boardSize === 9) size = 3.75;
+  else if (boardSize === 6) size = 5.625;
+  else if (boardSize === 12) size = 2.8125;
+  return size;
+}
+
 const handleMove = async(input) =>
 {
   setIsMove(true)
@@ -368,7 +377,7 @@ const handleMove = async(input) =>
   const xpos = Array.from(playerBoard)[1].charCodeAt(0)
   if(input === 'up')
   {
-    setPosition({x:position.x,y:position.y-4.5})
+    setPosition({x:position.x,y:position.y-handleDistance(boardSize)})
     player[0].direction = 'up'
     setTimeout(() => {
       player[0].boardId = (String.fromCharCode(ypos-1)+String.fromCharCode(xpos))
@@ -379,7 +388,7 @@ const handleMove = async(input) =>
   }
   else if(input === 'down')
   {
-    setPosition({x:position.x,y:position.y+4.5})
+    setPosition({x:position.x,y:position.y+handleDistance(boardSize)})
     player[0].direction = 'down'
     setTimeout(() => {
       player[0].boardId = (String.fromCharCode(ypos+1)+String.fromCharCode(xpos))
@@ -388,7 +397,7 @@ const handleMove = async(input) =>
   }
   else if(input === 'left')
   {
-    setPosition({x:position.x-4.5,y:position.y})
+    setPosition({x:position.x-handleDistance(boardSize),y:position.y})
     player[0].direction = 'left'
     setTimeout(() => {
       player[0].boardId = (String.fromCharCode(ypos)+String.fromCharCode(xpos-1))
@@ -397,7 +406,7 @@ const handleMove = async(input) =>
   }
   else if(input === 'right')
   {
-    setPosition({x:position.x+4.5,y:position.y})
+    setPosition({x:position.x+handleDistance(boardSize),y:position.y})
     player[0].direction = 'right'
     setTimeout(() => {
       player[0].boardId = (String.fromCharCode(ypos)+String.fromCharCode(xpos+1))
